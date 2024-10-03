@@ -1,18 +1,18 @@
 import assert from "minimalistic-assert";
 
 import * as hash_util from "./hash_util";
-import {$t} from "./i18n";
+import { $t } from "./i18n";
 import * as muted_users from "./muted_users";
 import * as narrow_state from "./narrow_state";
-import {page_params} from "./page_params";
+import { page_params } from "./page_params";
 import * as people from "./people";
 import * as presence from "./presence";
-import {realm} from "./state_data";
+import { realm } from "./state_data";
 import * as stream_data from "./stream_data";
-import type {StreamSubscription} from "./sub_store";
+import type { StreamSubscription } from "./sub_store";
 import * as timerender from "./timerender";
 import * as unread from "./unread";
-import {user_settings} from "./user_settings";
+import { user_settings } from "./user_settings";
 import * as user_status from "./user_status";
 import * as util from "./util";
 // Removed erroneous import statement
@@ -42,17 +42,17 @@ export function get_user_circle_class(user_id: number): string {
     const status = presence.get_status(user_id);
     const is_deactivated = !people.is_person_active(user_id);
 
-    if(!is_deactivated) {
-    switch (status) {
-        case "active":
-            return "user_circle_green";
-        case "idle":
-            return "user_circle_idle";
-        default:
-            return "user_circle_empty";
-    }
+    if (!is_deactivated) {
+        switch (status) {
+            case "active":
+                return "user_circle_green";
+            case "idle":
+                return "user_circle_idle";
+            default:
+                return "user_circle_empty";
+        }
     } else {
-        return "fa fa-ban pill-deactivated user_circle_deactivated tippy-zulip-delayed-tooltip";
+        return "user_circle_deactivated"
     }
 }
 
@@ -135,26 +135,26 @@ function get_num_unread(user_id: number): number {
 export function user_last_seen_time_status(user_id: number): string {
     const status = presence.get_status(user_id);
     if (status === "active") {
-        return $t({defaultMessage: "Active now"});
+        return $t({ defaultMessage: "Active now" });
     }
 
     if (status === "idle") {
         // When we complete our presence API rewrite to have the data
         // plumbed, we may want to change this to also mention when
         // they were last active.
-        return $t({defaultMessage: "Idle"});
+        return $t({ defaultMessage: "Idle" });
     }
 
     const last_active_date = presence.last_active_date(user_id);
     if (realm.realm_is_zephyr_mirror_realm) {
         // We don't send presence data to clients in Zephyr mirroring realms
-        return $t({defaultMessage: "Activity unknown"});
+        return $t({ defaultMessage: "Activity unknown" });
     } else if (last_active_date === undefined) {
         // There are situations where the client has incomplete presence
         // history on a user. This can happen when users are deactivated,
         // or when the user's last activity is older than what we fetch.
         assert(page_params.presence_history_limit_days_for_web_app === 365);
-        return $t({defaultMessage: "Not active in the last year"});
+        return $t({ defaultMessage: "Not active in the last year" });
     }
     return timerender.last_seen_status_from_date(last_active_date);
 }
@@ -231,8 +231,8 @@ export function get_title_data(
 
         if (bot_owner) {
             const bot_owner_name = $t(
-                {defaultMessage: "Owner: {name}"},
-                {name: bot_owner.full_name},
+                { defaultMessage: "Owner: {name}" },
+                { name: bot_owner.full_name },
             );
 
             return {

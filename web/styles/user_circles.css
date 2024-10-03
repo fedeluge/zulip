@@ -1,9 +1,7 @@
 .user_circle_green,
-
-
-
 .user_circle_idle,
 .user_circle_empty,
+.user_circle_deactivated,
 .user_circle_empty_line {
     border-radius: 50%;
     border: 1px solid;
@@ -42,8 +40,8 @@
 }
 
 .user_circle_deactivated {
+    border-color: hsl(0deg 0% 0%);
     display: flex;
     align-items: center;
     justify-content: center;
-    border-color: hsl(0, 0%, 50%);
 }
