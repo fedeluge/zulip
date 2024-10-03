@@ -40,7 +40,11 @@ export function set_is_searching_users(val: boolean): void {
 
 export function get_user_circle_class(user_id: number): string {
     const status = presence.get_status(user_id);
-    const is_deactivated = !people.is_person_active(user_id);
+    // Consider inaccessible users as active to avoid
+    // falsely showing the user as deactivated as we do
+    // not have any information about whether they are
+    // active or not.
+    const is_deactivated = (!people.is_person_active(user_id) && !people.get_by_user_id(user_id).is_inaccessible_user);
 
     if (!is_deactivated) {
         switch (status) {
