@@ -15,6 +15,7 @@ import * as unread from "./unread";
 import {user_settings} from "./user_settings";
 import * as user_status from "./user_status";
 import * as util from "./util";
+// Removed erroneous import statement
 
 /*
 
@@ -39,7 +40,9 @@ export function set_is_searching_users(val: boolean): void {
 
 export function get_user_circle_class(user_id: number): string {
     const status = presence.get_status(user_id);
+    const is_deactivated = !people.is_person_active(user_id);
 
+    if(!is_deactivated) {
     switch (status) {
         case "active":
             return "user_circle_green";
@@ -47,6 +50,9 @@ export function get_user_circle_class(user_id: number): string {
             return "user_circle_idle";
         default:
             return "user_circle_empty";
+    }
+    } else {
+        return "fa fa-ban pill-deactivated user_circle_deactivated tippy-zulip-delayed-tooltip";
     }
 }
 

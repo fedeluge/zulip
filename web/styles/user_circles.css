@@ -1,4 +1,7 @@
 .user_circle_green,
+
+
+
 .user_circle_idle,
 .user_circle_empty,
 .user_circle_empty_line {
@@ -36,4 +39,11 @@
         display: block;
         margin: 3.25px auto 0; /* (total height - line height) / 2 = 3.25px */
     }
+}
+
+.user_circle_deactivated {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-color: hsl(0, 0%, 50%);
 }
